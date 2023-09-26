@@ -11,7 +11,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
     /**
      * Display a listing of the resource.
@@ -19,6 +19,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $POSTS = Post::with('user')->get();
         return response()->json($posts);
     }
 
@@ -35,11 +36,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //     $user = User::find($request->userId);
+        //     $user->name = $request->user;
+        //     $user->save();
+
         $post = new Post();
         $post->title = $request->title;
         $post->slug = $request->title;
         $post->content = $request->content;
-        $post->user_id = '1';
+        $post->user_id = 1;
         $post->save();
 
         // return response()->json(['status' => 'post saved', 'code' => 200]);
